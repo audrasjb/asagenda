@@ -99,5 +99,44 @@ class Asagenda_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/asagenda-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
-
+	
+	/**
+	 * Register our custom post type for the admin area.
+	 *
+	 * @since    1.0.0
+	 */
+	public static function asagenda_Init_CPT() {
+		$labels = array(
+	    	'name' => __('Agenda', 'asagenda'),
+			'singular_name' => __('Event', 'asagenda'),
+			'add_new' => __('Add new', 'asagenda'),
+			'add_new_item' => __('Add new event', 'asagenda'),
+			'edit_item' => __('Edit event', 'asagenda'),
+			'new_item' => __('New event', 'asagenda'),
+			'all_items' => __('All events', 'asagenda'),
+			'view_item' => __('View event', 'asagenda'),
+			'search_items' => __('Search events', 'asagenda'),
+			'not_found' =>  __('No event found', 'asagenda'),
+			'not_found_in_trash' => __('No event found in trash', 'asagenda'), 
+			'parent_item_colon' => '',
+			'menu_name' => 'Agenda'
+		);
+		$args = array(
+			'labels' => $labels,
+			'public' => true,
+			'publicly_queryable' => true,
+			'show_ui' => true, 
+			'show_in_menu' => true, 
+			'query_var' => true,
+			'rewrite' => array( 'slug' => 'agenda' ),
+			'capability_type' => 'post',
+			'has_archive' => true, 
+			'hierarchical' => false,
+			'menu_position' => 20,
+			'menu_icon' => 'dashicons-calendar',
+			'supports' => array( 'title', 'editor' )
+		); 
+		// Enregistrement du TCP
+		register_post_type( 'asagenda', $args );
+	}
 }
