@@ -153,7 +153,9 @@ class Asagenda {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-		$this->loader->add_action( 'init', $plugin_admin, 'Asagenda_Init_CPT' );
+		$this->loader->add_action( 'init', $plugin_admin, 'asagenda_Init_CPT' );
+		$this->loader->add_filter( 'manage_agenda_posts_columns', $plugin_admin, 'asagenda_Init_EditTable_Columns_Header' ) ;
+		$this->loader->add_action( 'manage_agenda_posts_custom_column', $plugin_admin, 'asagenda_Init_EditTable_Columns_Content', 10, 2 );		
 
 	}
 

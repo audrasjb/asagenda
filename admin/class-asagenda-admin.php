@@ -139,4 +139,52 @@ class Asagenda_Admin {
 		// Enregistrement du TCP
 		register_post_type( 'asagenda', $args );
 	}
+	
+	/**
+	 * Register our custom hooks to display edit list table for this CPT.
+	 *
+	 * @since    1.0.0
+	 */
+	// Pour créer un filtre sur les métadonnées ou autres, voir : http://justintadlock.com/archives/2011/06/27/custom-columns-for-custom-post-types
+
+	public static function asagenda_Init_EditTable_Columns_Header($columns) {
+		// Colums headers
+		$columns = array(
+			'cb' => '<input type="checkbox" />',
+			'title' => __( 'Title', 'asagenda' ),
+			'datedebut' => __('Date de début', 'asagenda' ),
+			'datefin' => __('Date de fin', 'asagenda' ),
+			'date' => __( 'Date of publishing', 'asagenda' )
+		);
+		return $columns;
+	}
+
+	// Fill the columns of the edit table
+	public static function asagenda_Init_EditTable_Columns_Content( $column, $post_id ) {
+		global $post;
+		switch( $column ) {
+			case 'datedebut' :
+				$dateDebut = get_post_meta($post_id, 'datedebut', true);
+				echo substr($dateDebut,6,2).'/'.substr($dateDebut,4,2).'/'.substr($dateDebut,0,4);
+			break;
+			case 'datefin' :
+				$dateJour = date('Ymd');
+				$dateFin = get_post_meta($post_id, 'datefin', true);
+				$formatedDateFin = substr($dateFin,6,2).'/'.substr($dateFin,4,2).'/'.substr($dateFin,0,4);
+				if ($dateFin == '') {
+					echo '<span style="color:#c00;">Aucune date de fin</span>';
+				} else {
+				if ($dateJour>$dateFin) {
+					echo '<span style="color:#c00;">'.$formatedDateFin.' (fini)</span>';
+				} else {
+					echo '<span style="color:#0c0;">'.$formatedDateFin.'</span>';
+				}
+			}
+			break;
+			/* Break out */
+			default :
+			break;
+		}
+	}
+	
 }
