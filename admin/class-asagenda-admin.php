@@ -152,7 +152,7 @@ class Asagenda_Admin {
 		$columns = array(
 			'cb' => '<input type="checkbox" />',
 			'title' => __( 'Title', 'asagenda' ),
-			'datedebut' => __('Date de début', 'asagenda' ),
+			'datedebut' => __('Date de début', 'asagenda' ), 
 			'datefin' => __('Date de fin', 'asagenda' ),
 			'date' => __( 'Date of publishing', 'asagenda' )
 		);
