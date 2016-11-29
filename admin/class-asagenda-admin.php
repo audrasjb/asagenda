@@ -119,7 +119,7 @@ class Asagenda_Admin {
 			'not_found' =>  __('No event found', 'asagenda'),
 			'not_found_in_trash' => __('No event found in trash', 'asagenda'), 
 			'parent_item_colon' => '',
-			'menu_name' => 'Agenda'
+			'menu_name' => __('Agenda', 'asagenda')
 		);
 		$args = array(
 			'labels' => $labels,
