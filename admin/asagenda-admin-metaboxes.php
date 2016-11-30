@@ -49,10 +49,10 @@
 		if ($dateEnd != '') {
 			if ($today > $dateEnd) {
 	    		// C'est fini
-				echo '<p style="color: #c00;">' . __('That content is not displayed anymore on the agenda because the event is over. You can edit dates if necessary.') . '</p>';
+				echo '<p style="color: #c00;">' . __('This content is not displayed anymore on the agenda because the event is over. You can edit dates if necessary.') . '</p>';
 	    	} else {
 	    		// C'est encore d'actualité
-				echo '<p style="color: #0c0;">' . __('That content is actually dsplayed on the agenda. You can edit dates if necessary.') . '</p>';
+				echo '<p style="color: #0c0;">' . __('This content is actually dsplayed on the agenda. You can edit dates if necessary.') . '</p>';
 	    	}
 		}
 		?>
