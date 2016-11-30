@@ -92,23 +92,27 @@
 	function asagenda_Init_EditTable_Columns_Content( $column, $post_id ) {
 		global $post;
 		switch( $column ) {
-			case 'datedebut' :
-				$dateDebut = get_post_meta($post_id, 'datedebut', true);
-				echo substr($dateDebut,6,2).'/'.substr($dateDebut,4,2).'/'.substr($dateDebut,0,4);
-			break;
-			case 'datefin' :
-				$dateJour = date('Ymd');
-				$dateFin = get_post_meta($post_id, 'datefin', true);
-				$formatedDateFin = substr($dateFin,6,2).'/'.substr($dateFin,4,2).'/'.substr($dateFin,0,4);
-				if ($dateFin == '') {
-					echo '<span style="color:#c00;">Aucune date de fin</span>';
+			case 'asagenda_date_start' :
+				$dateDebut = get_post_meta($post_id, 'asagenda_date_start', true);
+				if ($dateDebut) {
+					echo substr($dateDebut,6,2).'/'.substr($dateDebut,4,2).'/'.substr($dateDebut,0,4);
 				} else {
-				if ($dateJour>$dateFin) {
-					echo '<span style="color:#c00;">'.$formatedDateFin.' (fini)</span>';
-				} else {
-					echo '<span style="color:#0c0;">'.$formatedDateFin.'</span>';
+					echo __('Empty date, this event will not be displayed in the agenda right now.');
 				}
-			}
+			break;
+			case 'asagenda_date_end' :
+				$today = date('Ymd');
+				$dateEnd = get_post_meta($post_id, 'asagenda_date_end', true);
+				$formatedDateEnd = substr($dateEnd,6,2).'/'.substr($dateEnd,4,2).'/'.substr($dateEnd,0,4);
+				if ($dateEnd) {
+					if ( $today > $dateEnd) {
+						echo '<span class="list-date-finished">'.$formatedDateEnd.' (fini)</span>';
+					} else {
+						echo '<span class="list-date-not-finished">'.$formatedDateEnd.'</span>';
+					}
+				} else {
+					echo __('Empty date, this event will not be displayed in the agenda right now.');
+				}
 			break;
 			/* Break out */
 			default :

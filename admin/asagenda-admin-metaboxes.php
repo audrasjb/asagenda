@@ -56,8 +56,8 @@
 	    	}
 		}
 		?>
-		<p>Date de début : <br /><input id="date-start" name="date-start" type="text" value="<?php if ($dateStart) { echo substr($dateStart,6,2).'/'.substr($dateStart,4,2).'/'.substr($dateStart,0,4); } ?>" /></p>
-		<p>Date de fin : <br /><input id="date-end" name="date-end" type="text" value="<?php if ($dateEnd) { echo substr($dateEnd,6,2).'/'.substr($dateEnd,4,2).'/'.substr($dateEnd,0,4); } ?>" /></p>
+		<p><label fr="date-start"><?php echo __('Start date') ?></label><br /><input id="date-start" name="date-start" type="text" value="<?php if ($dateStart) { echo substr($dateStart,6,2).'/'.substr($dateStart,4,2).'/'.substr($dateStart,0,4); } ?>" /></p>
+		<p><label fr="date-end"><?php echo __('End date') ?></label><br /><input id="date-end" name="date-end" type="text" value="<?php if ($dateEnd) { echo substr($dateEnd,6,2).'/'.substr($dateEnd,4,2).'/'.substr($dateEnd,0,4); } ?>" /></p>
 		<p style="font-style: italic; color: #777;"><?php echo __('If it’s a single day event, use the same value for both start and end dates.') ?>.</p>
 		<?php
 	}
@@ -67,20 +67,20 @@
 	function asagenda_Save_Dates_Metabox($post_id) {
  		// Vérifier si la méta existe. Sinon, et bien on va l'ajouter !
  		// on utilise d'abord add_post_meta, qui s'exécute uniquement si la méta n'existe pas encore pour ce contenu, dans la BDD
- 		$dateStart = $_POST['date-start'];
+ 		$dateStart = $_POST['asagenda_date_start'];
  		$formatedDateStart = explode("/", $dateStart);
  		$formatedDateStart = $formatedDateStart[2].$formatedDateStart[1].$formatedDateStart[0];
  		add_post_meta($post_id, 'asagenda_date_start', $formatedDateStart, true);
  		update_post_meta($post_id, 'asagenda_date_start', $formatedDateStart);
 
- 		$dateEnd = $_POST['date-end'];
+ 		$dateEnd = $_POST['asagenda_date_end'];
  		$formatedDateEnd = explode("/", $dateEnd);
  		$formatedDateEnd = $formatedDateEnd[2].$formatedDateEnd[1].$formatedDateEnd[0];
  		add_post_meta($post_id, 'asagenda_date_end', $formatedDateEnd, true);
  		update_post_meta($post_id, 'asagenda_date_end', $formatedDateEnd);
  		
  		// 13/09/13 : ajout des variables destinées au tri des contenus
- 		$formatedDateStartSort = explode("/", $datedebut);
+ 		$formatedDateStartSort = explode("/", $dateStart);
  		$formatedDateStartSort = $formatedDateStartSort[2].$formatedDateStartSort[1].$formatedDateStartSort[0];
  		add_post_meta($post_id, 'asagenda_date_start_sort', $formatedDateStartSort, true);
  		update_post_meta($post_id, 'asagenda_date_start_sort', $formatedDateStartSort);
