@@ -30,46 +30,36 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+// Custom variables
+$plugin_version = '1.0.0';
+$plugin_name = 'asagenda';
+
 /**
  * The code that runs during plugin activation.
- * This action is documented in includes/class-asagenda-activator.php
- */
-function activate_asagenda() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-asagenda-activator.php';
-	Asagenda_Activator::activate();
-}
+*/
+//require_once plugin_dir_path( __FILE__ ) . 'includes/asagenda-activator.php';
+//register_activation_hook( __FILE__, 'activate_asagenda' );
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in includes/class-asagenda-deactivator.php
  */
-function deactivate_asagenda() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-asagenda-deactivator.php';
-	Asagenda_Deactivator::deactivate();
-}
-
-register_activation_hook( __FILE__, 'activate_asagenda' );
-register_deactivation_hook( __FILE__, 'deactivate_asagenda' );
+//require_once plugin_dir_path( __FILE__ ) . 'includes/asagenda-deactivator.php';
+//register_deactivation_hook( __FILE__, 'deactivate_asagenda' );
 
 /**
- * The core plugin class that is used to define internationalization,
- * admin-specific hooks, and public-facing site hooks.
+ * The class responsible for defining internationalization functionality
+ * of the plugin.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-asagenda.php';
+require_once plugin_dir_path( dirname( __FILE__ ) ) . '/' .$plugin_name . '/includes/asagenda-i18n.php';
 
 /**
- * Begins execution of the plugin.
- *
- * Since everything within the plugin is registered via hooks,
- * then kicking off the plugin from this point in the file does
- * not affect the page life cycle.
- *
- * @since    1.0.0
+ * The class responsible for defining all actions that occur in the admin area.
  */
-function run_asagenda() {
+require_once plugin_dir_path( dirname( __FILE__ ) ) . '/' .$plugin_name . '/admin/asagenda-admin.php';
+require_once plugin_dir_path( dirname( __FILE__ ) ) . '/' .$plugin_name . '/admin/asagenda-admin-metaboxes.php';
 
-	$plugin = new Asagenda();
-	$plugin->run();
-
-}
-run_asagenda();
+/**
+ * The class responsible for defining all actions that occur in the public-facing
+ * side of the site.
+ */
+//require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/asagenda-public.php';

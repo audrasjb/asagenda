@@ -13,99 +13,25 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
- *
  * @package    Asagenda
  * @subpackage Asagenda/admin
  * @author     audrasjb <audrasjb@gmail.com>
  */
-class Asagenda_Admin {
-
-	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
-	private $plugin_name;
-
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
-	private $version;
-
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
-	 */
-	public function __construct( $plugin_name, $version ) {
-
-		$this->plugin_name = $plugin_name;
-		$this->version = $version;
-
-	}
-
-	/**
-	 * Register the stylesheets for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_styles() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Asagenda_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Asagenda_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/asagenda-admin.css', array(), $this->version, 'all' );
-
-	}
-
-	/**
-	 * Register the JavaScript for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Asagenda_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Asagenda_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/asagenda-admin.js', array( 'jquery' ), $this->version, false );
-
+	// Enqueue styles
+	add_action( 'admin_enqueue_scripts', 'enqueue_styles' );
+	function enqueue_styles() {
+		wp_enqueue_style( 'asagenda', plugin_dir_url( __FILE__ ) . 'css/asagenda-admin.css', array(), '', 'all' );
 	}
 	
-	/**
-	 * Register our custom post type for the admin area.
-	 *
-	 * @since    1.0.0
-	 */
-	public static function asagenda_Init_CPT() {
+	// Enqueue scripts
+	add_action( 'admin_enqueue_scripts', 'enqueue_scripts' );
+	function enqueue_scripts() {
+		wp_enqueue_script( 'asagenda', plugin_dir_url( __FILE__ ) . 'js/asagenda-admin.js', array( 'jquery' ), '', false );
+	}
+	
+	// CPT
+	add_action('init', 'asagenda_Init_CPT');
+	function asagenda_Init_CPT() {
 		$labels = array(
 	    	'name' => __('Agenda', 'asagenda'),
 			'singular_name' => __('Event', 'asagenda'),
@@ -147,7 +73,8 @@ class Asagenda_Admin {
 	 */
 	// Pour créer un filtre sur les métadonnées ou autres, voir : http://justintadlock.com/archives/2011/06/27/custom-columns-for-custom-post-types
 
-	public static function asagenda_Init_EditTable_Columns_Header($columns) {
+	add_filter( 'manage_asagenda_posts_columns', 'asagenda_Init_EditTable_Columns_Header' ) ;
+	function asagenda_Init_EditTable_Columns_Header($columns) {
 		// Colums headers
 		$columns = array(
 			'cb' => '<input type="checkbox" />',
@@ -161,7 +88,8 @@ class Asagenda_Admin {
 	}
 
 	// Fill the columns of the edit table
-	public static function asagenda_Init_EditTable_Columns_Content( $column, $post_id ) {
+	add_action( 'manage_asagenda_posts_custom_column', 'asagenda_Init_EditTable_Columns_Content', 10, 2 );		
+	function asagenda_Init_EditTable_Columns_Content( $column, $post_id ) {
 		global $post;
 		switch( $column ) {
 			case 'datedebut' :
@@ -188,4 +116,3 @@ class Asagenda_Admin {
 		}
 	}
 	
-}

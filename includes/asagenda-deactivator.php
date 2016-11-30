@@ -20,17 +20,6 @@
  * @subpackage Asagenda/includes
  * @author     audrasjb <audrasjb@gmail.com>
  */
-class Asagenda_Deactivator {
-
-	/**
-	 * Short Description. (use period)
-	 *
-	 * Long Description.
-	 *
-	 * @since    1.0.0
-	 */
-	public static function deactivate() {
-
-	}
+function deactivate() {
 
 }

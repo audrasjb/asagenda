@@ -20,73 +20,22 @@
  * @subpackage Asagenda/admin
  * @author     audrasjb <audrasjb@gmail.com>
  */
-class Asagenda_Admin_Metaboxes {
-
-	/**
-	 * The post meta data
-	 *
-	 * @since 		1.0.0
-	 * @access 		private
-	 * @var 		string 			$meta	The post meta data.
-	 */
-	private $meta;
-
-	/**
-	 * The ID of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $plugin_name    The ID of this plugin.
-	 */
-	private $plugin_name;
-
-	/**
-	 * The version of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
-	 */
-	private $version;
-
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
-	 */
-	public function __construct( $plugin_name, $version ) {
-
-		$this->plugin_name = $plugin_name;
-		$this->version = $version;
-
-		$this->set_meta();
-
-	}
-
-	/**
-	 * Registers metaboxes with WordPress
-	 *
-	 * @since 	1.0.0
-	 * @access 	public
-	 */
-	public static function asagenda_Add_Metaboxes() {
+	add_action( 'add_meta_boxes', 'asagenda_Add_Metaboxes' );
+	function asagenda_Add_Metaboxes() {
 		// add_meta_box( $id, $title, $callback, $screen, $context, $priority, $callback_args );
 	
 		add_meta_box(
 			'asagenda_dates_metabox', 
 			__('Start &amp; End dates', 'asagenda'), 
 			'asagenda_Create_Dates_Metabox', 
-			'agenda', 
+			'asagenda', 
 			'side', 
 			'high'
 		);
 
 	}
 
-
-	public function asagenda_Create_Dates_Metabox( $post ) {
+	function asagenda_Create_Dates_Metabox( $post ) {
 		
 		// Afficher les dates déjà enregistrées (le cas échéant).
 		$dateStart = get_post_meta( $post->ID, 'asagenda_date_start', true );
@@ -109,12 +58,13 @@ class Asagenda_Admin_Metaboxes {
 		?>
 		<p>Date de début : <br /><input id="date-start" name="date-start" type="text" value="<?php if ($dateStart) { echo substr($dateStart,6,2).'/'.substr($dateStart,4,2).'/'.substr($dateStart,0,4); } ?>" /></p>
 		<p>Date de fin : <br /><input id="date-end" name="date-end" type="text" value="<?php if ($dateEnd) { echo substr($dateEnd,6,2).'/'.substr($dateEnd,4,2).'/'.substr($dateEnd,0,4); } ?>" /></p>
-		<p style="font-style: italic; color: #777;">La date de fin est utilisée pour l'arrêt de l'affichage du contenu sur le site.</p>
+		<p style="font-style: italic; color: #777;"><?php echo __('If it’s a single day event, use the same value for both start and end dates.') ?>.</p>
 		<?php
 	}
 
 	// Enregistrer les valeurs saisies.
-	public function asagenda_Save_Dates_Metabox($post_id) {
+	add_action( 'save_post', 'asagenda_Save_Dates_Metabox');
+	function asagenda_Save_Dates_Metabox($post_id) {
  		// Vérifier si la méta existe. Sinon, et bien on va l'ajouter !
  		// on utilise d'abord add_post_meta, qui s'exécute uniquement si la méta n'existe pas encore pour ce contenu, dans la BDD
  		$dateStart = $_POST['date-start'];
@@ -135,6 +85,3 @@ class Asagenda_Admin_Metaboxes {
  		add_post_meta($post_id, 'asagenda_date_start_sort', $formatedDateStartSort, true);
  		update_post_meta($post_id, 'asagenda_date_start_sort', $formatedDateStartSort);
 	}
-
-
-}
