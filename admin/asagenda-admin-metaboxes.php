@@ -49,10 +49,10 @@
 		if ($dateEnd != '') {
 			if ($today > $dateEnd) {
 	    		// C'est fini
-				echo '<p style="color: #c00;">Ce contenu ne s\'affiche plus sur le site car sa date de fin est inférieure à celle d\'aujourd\'hui.<br /><br />Vous pouvez modifier ces dates si vous le souhaitez.</p>';
+				echo '<p style="color: #c00;">' . __('That content is not displayed anymore on the agenda because the event is over. You can edit dates if necessary.') . '</p>';
 	    	} else {
 	    		// C'est encore d'actualité
-				echo '<p style="color: #0c0;">Ce contenu est actuellement affiché sur le site. Vous pouvez modifier les dates de début et de fin à volonté.</p>';
+				echo '<p style="color: #0c0;">' . __('That content is actually dsplayed on the agenda. You can edit dates if necessary.') . '</p>';
 	    	}
 		}
 		?>
@@ -67,13 +67,13 @@
 	function asagenda_Save_Dates_Metabox($post_id) {
  		// Vérifier si la méta existe. Sinon, et bien on va l'ajouter !
  		// on utilise d'abord add_post_meta, qui s'exécute uniquement si la méta n'existe pas encore pour ce contenu, dans la BDD
- 		$dateStart = $_POST['asagenda_date_start'];
+ 		$dateStart = $_POST['date-start'];
  		$formatedDateStart = explode("/", $dateStart);
  		$formatedDateStart = $formatedDateStart[2].$formatedDateStart[1].$formatedDateStart[0];
  		add_post_meta($post_id, 'asagenda_date_start', $formatedDateStart, true);
  		update_post_meta($post_id, 'asagenda_date_start', $formatedDateStart);
 
- 		$dateEnd = $_POST['asagenda_date_end'];
+ 		$dateEnd = $_POST['date-end'];
  		$formatedDateEnd = explode("/", $dateEnd);
  		$formatedDateEnd = $formatedDateEnd[2].$formatedDateEnd[1].$formatedDateEnd[0];
  		add_post_meta($post_id, 'asagenda_date_end', $formatedDateEnd, true);
