@@ -106,9 +106,9 @@
 				$formatedDateEnd = substr($dateEnd,6,2).'/'.substr($dateEnd,4,2).'/'.substr($dateEnd,0,4);
 				if ($dateEnd) {
 					if ( $today > $dateEnd) {
-						echo '<span class="list-date-finished">'.$formatedDateEnd.' (fini)</span>';
+						echo '<span class="list-date-finished">'.$formatedDateEnd.' (' . __('Has ended') . ')</span>';
 					} else {
-						echo '<span class="list-date-not-finished">'.$formatedDateEnd.'</span>';
+						echo '<span class="list-date-not-finished">'.$formatedDateEnd.' (' . __('To be coming') . ')</span>';
 					}
 				} else {
 					echo __('Empty date, this event will not be displayed in the agenda right now.');
