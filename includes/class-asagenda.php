@@ -112,6 +112,7 @@ class Asagenda {
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-asagenda-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-asagenda-admin-metaboxes.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
@@ -157,6 +158,10 @@ class Asagenda {
 		$this->loader->add_filter( 'manage_agenda_posts_columns', $plugin_admin, 'asagenda_Init_EditTable_Columns_Header' ) ;
 		$this->loader->add_action( 'manage_agenda_posts_custom_column', $plugin_admin, 'asagenda_Init_EditTable_Columns_Content', 10, 2 );		
 
+		$plugin_admin_metas = new asagenda_Admin_Metaboxes( $this->get_plugin_name(), $this->get_version() );
+		
+		$this->loader->add_action( 'add_meta_boxes', $plugin_admin_metas, 'asagenda_Add_Metaboxes' );
+		$this->loader->add_action( 'save_post', $plugin_admin_metas, 'asagenda_Save_Dates_Metabox');
 	}
 
 	/**
