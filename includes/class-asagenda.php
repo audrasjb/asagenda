@@ -37,7 +37,7 @@ class Asagenda {
 	 * @access   protected
 	 * @var      Asagenda_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
-	protected $loader;
+	private $loader;
 
 	/**
 	 * The unique identifier of this plugin.
@@ -46,7 +46,7 @@ class Asagenda {
 	 * @access   protected
 	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
 	 */
-	protected $plugin_name;
+	private $plugin_name;
 
 	/**
 	 * The current version of the plugin.
@@ -55,7 +55,7 @@ class Asagenda {
 	 * @access   protected
 	 * @var      string    $version    The current version of the plugin.
 	 */
-	protected $version;
+	private $version;
 
 	/**
 	 * Define the core functionality of the plugin.
@@ -158,7 +158,7 @@ class Asagenda {
 		$this->loader->add_filter( 'manage_agenda_posts_columns', $plugin_admin, 'asagenda_Init_EditTable_Columns_Header' ) ;
 		$this->loader->add_action( 'manage_agenda_posts_custom_column', $plugin_admin, 'asagenda_Init_EditTable_Columns_Content', 10, 2 );		
 
-		$plugin_admin_metas = new asagenda_Admin_Metaboxes( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin_metas = new Asagenda_Admin_Metaboxes( $this->get_plugin_name(), $this->get_version() );
 		
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin_metas, 'asagenda_Add_Metaboxes' );
 		$this->loader->add_action( 'save_post', $plugin_admin_metas, 'asagenda_Save_Dates_Metabox');

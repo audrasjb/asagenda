@@ -20,7 +20,7 @@
  * @subpackage Asagenda/admin
  * @author     audrasjb <audrasjb@gmail.com>
  */
-class asagenda_Admin_Metaboxes {
+class Asagenda_Admin_Metaboxes {
 
 	/**
 	 * The post meta data
@@ -61,7 +61,7 @@ class asagenda_Admin_Metaboxes {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
-		//$this->set_meta();
+		$this->set_meta();
 
 	}
 
@@ -71,12 +71,12 @@ class asagenda_Admin_Metaboxes {
 	 * @since 	1.0.0
 	 * @access 	public
 	 */
-	public function asagenda_Add_Metaboxes() {
+	public static function asagenda_Add_Metaboxes() {
 		// add_meta_box( $id, $title, $callback, $screen, $context, $priority, $callback_args );
 	
 		add_meta_box(
 			'asagenda_dates_metabox', 
-			__('Start &amp; End dates'), 
+			__('Start &amp; End dates', 'asagenda'), 
 			'asagenda_Create_Dates_Metabox', 
 			'agenda', 
 			'side', 
@@ -86,7 +86,7 @@ class asagenda_Admin_Metaboxes {
 	}
 
 
-	private function asagenda_Create_Dates_Metabox( $post ) {
+	public function asagenda_Create_Dates_Metabox( $post ) {
 		
 		// Afficher les dates déjà enregistrées (le cas échéant).
 		$dateStart = get_post_meta( $post->ID, 'asagenda_date_start', true );
