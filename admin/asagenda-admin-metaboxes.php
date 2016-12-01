@@ -26,32 +26,40 @@
 	
 		add_meta_box(
 			'asagenda_dates_metabox', 
-			__('Start &amp; End dates', 'asagenda'), 
+			__( 'Start &amp; End dates', 'asagenda' ), 
 			'asagenda_Create_Dates_Metabox', 
 			'asagenda', 
 			'side', 
 			'high'
 		);
 
+		add_meta_box( 
+        	'asagenda_place_metabox',
+			__( 'Place', 'asagenda' ),
+			'asagenda_Create_Place_Metabox',
+			'asagenda',
+			'normal',
+			'low' 
+		);
+    
 	}
 
 	function asagenda_Create_Dates_Metabox( $post ) {
-		
-		// Afficher les dates déjà enregistrées (le cas échéant).
+		// Get existing dates
 		$dateStart = get_post_meta( $post->ID, 'asagenda_date_start', true );
 		$dateEnd = get_post_meta( $post->ID, 'asagenda_date_end', true );
  
-		// Utilisation de Nonce pour la vérification des champs (sécurité)
+		// Nonce field for security
 		wp_nonce_field( plugin_basename(__FILE__), 'asagenda_metabox_nonce');
 		
-		// Opérations sur les dates pour obtenir un format de comparaison
+		// Compare dates and get messages
 		$today = date('Ymd');
 		if ($dateEnd != '') {
 			if ($today > $dateEnd) {
-	    		// C'est fini
+	    		// Finished event
 				$messageBoxEnd = '<p style="color: #c00;">' . __('This event no longer appears in the calendar because it is finished. You can change the dates if necessary.') . '</p>';
 	    	} else {
-	    		// C'est encore d'actualité
+	    		// Upcoming event
 				$messageBoxUpcoming = '<p style="color: #0c0;">' . __('This event is displayed in the calendar. You can change the dates if necessary.') . '</p>';
 	    	}
 		}
@@ -95,4 +103,9 @@
  			add_post_meta($post_id, 'asagenda_date_end', '', true);
  			update_post_meta($post_id, 'asagenda_date_end', '');
  		}
+	}
+
+
+	function asagenda_Create_Place_Metabox( $post ) {
+	
 	}
