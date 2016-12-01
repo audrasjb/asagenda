@@ -97,7 +97,7 @@
 				if ($dateDebut) {
 					echo substr($dateDebut,6,2).'/'.substr($dateDebut,4,2).'/'.substr($dateDebut,0,4);
 				} else {
-					echo __('Empty date, this event will not be displayed in the agenda right now.');
+					echo __('The date is empty. This content can not be displayed in the calendar.');
 				}
 			break;
 			case 'asagenda_date_end' :
@@ -106,12 +106,12 @@
 				$formatedDateEnd = substr($dateEnd,6,2).'/'.substr($dateEnd,4,2).'/'.substr($dateEnd,0,4);
 				if ($dateEnd) {
 					if ( $today > $dateEnd) {
-						echo '<span class="list-date-finished">'.$formatedDateEnd.' (' . __('Has ended') . ')</span>';
+						echo '<span class="list-date-finished">'.$formatedDateEnd.' (' . __('completed') . ')</span>';
 					} else {
-						echo '<span class="list-date-not-finished">'.$formatedDateEnd.' (' . __('To be coming') . ')</span>';
+						echo '<span class="list-date-not-finished">'.$formatedDateEnd.' (' . __('upcoming') . ')</span>';
 					}
 				} else {
-					echo __('Empty date, this event will not be displayed in the agenda right now.');
+					echo __('The date is empty. This content can not be displayed in the calendar.');
 				}
 			break;
 			/* Break out */

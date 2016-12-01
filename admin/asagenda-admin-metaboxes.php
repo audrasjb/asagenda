@@ -49,39 +49,50 @@
 		if ($dateEnd != '') {
 			if ($today > $dateEnd) {
 	    		// C'est fini
-				echo '<p style="color: #c00;">' . __('This content is not displayed anymore on the agenda because the event is over. You can edit dates if necessary.') . '</p>';
+				$messageBoxEnd = '<p style="color: #c00;">' . __('This event no longer appears in the calendar because it is finished. You can change the dates if necessary.') . '</p>';
 	    	} else {
 	    		// C'est encore d'actualité
-				echo '<p style="color: #0c0;">' . __('This content is actually dsplayed on the agenda. You can edit dates if necessary.') . '</p>';
+				$messageBoxUpcoming = '<p style="color: #0c0;">' . __('This event is displayed in the calendar. You can change the dates if necessary.') . '</p>';
 	    	}
 		}
 		?>
+		<p><em><?php echo __('If it’s a single day event, use the same value for both start and end dates.') ?></em></p>
 		<p><label fr="date-start"><?php echo __('Start date') ?></label><br /><input id="date-start" name="date-start" type="text" value="<?php if ($dateStart) { echo substr($dateStart,6,2).'/'.substr($dateStart,4,2).'/'.substr($dateStart,0,4); } ?>" /></p>
 		<p><label fr="date-end"><?php echo __('End date') ?></label><br /><input id="date-end" name="date-end" type="text" value="<?php if ($dateEnd) { echo substr($dateEnd,6,2).'/'.substr($dateEnd,4,2).'/'.substr($dateEnd,0,4); } ?>" /></p>
-		<p style="font-style: italic; color: #777;"><?php echo __('If it’s a single day event, use the same value for both start and end dates.') ?>.</p>
+		<?php if (isset($messageBoxEnd)) { echo $messageBoxEnd; } ?>
+		<?php if (isset($messageBoxUpcoming)) { echo $messageBoxUpcoming; } ?>
 		<?php
 	}
 
-	// Enregistrer les valeurs saisies.
+	// Add or update post metas on Save
 	add_action( 'save_post', 'asagenda_Save_Dates_Metabox');
 	function asagenda_Save_Dates_Metabox($post_id) {
- 		// Vérifier si la méta existe. Sinon, et bien on va l'ajouter !
- 		// on utilise d'abord add_post_meta, qui s'exécute uniquement si la méta n'existe pas encore pour ce contenu, dans la BDD
- 		$dateStart = $_POST['date-start'];
- 		$formatedDateStart = explode("/", $dateStart);
- 		$formatedDateStart = $formatedDateStart[2].$formatedDateStart[1].$formatedDateStart[0];
- 		add_post_meta($post_id, 'asagenda_date_start', $formatedDateStart, true);
- 		update_post_meta($post_id, 'asagenda_date_start', $formatedDateStart);
-
- 		$dateEnd = $_POST['date-end'];
- 		$formatedDateEnd = explode("/", $dateEnd);
- 		$formatedDateEnd = $formatedDateEnd[2].$formatedDateEnd[1].$formatedDateEnd[0];
- 		add_post_meta($post_id, 'asagenda_date_end', $formatedDateEnd, true);
- 		update_post_meta($post_id, 'asagenda_date_end', $formatedDateEnd);
- 		
- 		// 13/09/13 : ajout des variables destinées au tri des contenus
- 		$formatedDateStartSort = explode("/", $dateStart);
- 		$formatedDateStartSort = $formatedDateStartSort[2].$formatedDateStartSort[1].$formatedDateStartSort[0];
- 		add_post_meta($post_id, 'asagenda_date_start_sort', $formatedDateStartSort, true);
- 		update_post_meta($post_id, 'asagenda_date_start_sort', $formatedDateStartSort);
+ 		if ( isset($_POST['date-start']) && !empty($_POST['date-start']) ) {
+	 		$dateStart = $_POST['date-start'];
+	 		$formatedDateStart = explode("/", $dateStart);
+	 		$formatedDateStart = $formatedDateStart[2].$formatedDateStart[1].$formatedDateStart[0];
+	 		add_post_meta($post_id, 'asagenda_date_start', $formatedDateStart, true);
+	 		update_post_meta($post_id, 'asagenda_date_start', $formatedDateStart);
+	 		// Sorting var
+	 		$formatedDateStartSort = explode("/", $dateStart);
+	 		$formatedDateStartSort = $formatedDateStartSort[2].$formatedDateStartSort[1].$formatedDateStartSort[0];
+	 		add_post_meta($post_id, 'asagenda_date_start_sort', $formatedDateStartSort, true);
+	 		update_post_meta($post_id, 'asagenda_date_start_sort', $formatedDateStartSort);
+	 	} else {
+	 		add_post_meta($post_id, 'asagenda_date_start', '', true);
+	 		update_post_meta($post_id, 'asagenda_date_start', '');
+	 		add_post_meta($post_id, 'asagenda_date_start_sort', '', true);
+	 		update_post_meta($post_id, 'asagenda_date_start_sort', '');
+	 	}
+	 	
+ 		if ( isset($_POST['date-end']) && !empty($_POST['date-end']) ) {
+ 			$dateEnd = $_POST['date-end'];
+ 			$formatedDateEnd = explode("/", $dateEnd);
+ 			$formatedDateEnd = $formatedDateEnd[2].$formatedDateEnd[1].$formatedDateEnd[0];
+ 			add_post_meta($post_id, 'asagenda_date_end', $formatedDateEnd, true);
+ 			update_post_meta($post_id, 'asagenda_date_end', $formatedDateEnd);
+ 		} else {
+ 			add_post_meta($post_id, 'asagenda_date_end', '', true);
+ 			update_post_meta($post_id, 'asagenda_date_end', '');
+ 		}
 	}
