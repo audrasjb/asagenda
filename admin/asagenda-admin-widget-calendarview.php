@@ -51,26 +51,29 @@ class AsAgenda_calendar extends WP_Widget {
 			while ( $queryAsAgenda->have_posts() ) :
 				$queryAsAgenda->the_post();
 				$dateStart = get_post_meta( get_the_ID(), 'asagenda_date_start', true );
-				$dateStartFormatted = date_i18n( get_option( 'date_format' ), strtotime( $dateStart ) );
+				$dateStartFormatted = date_i18n( 'Y-m-d', strtotime( $dateStart ) );
 				$dateEnd = get_post_meta( get_the_ID(), 'asagenda_date_end', true );
-				$dateEndFormatted = date_i18n( get_option( 'date_format' ), strtotime( $dateEnd ) );
+				$dateEndFormatted = date_i18n( 'Y-m-d', strtotime( $dateEnd ) );
+				if ( $dateStartFormatted == $dateEndFormatted ) : $dateEndFormatted = ''; endif;
 				$eventTitle = get_the_title();
 				$eventID = get_the_title();
 				$eventPermalink = get_permalink();
-				$arrayEvents['montly'][] = array( 
+				$arrayEvents['monthly'][] = array( 
 					'id' => $eventID, 
 					'name' => $eventTitle, 
-					'startdate' => $dateStart, 
-					'enddate' => $dateEnd, 
+					'startdate' => $dateStartFormatted, 
+					'enddate' => $dateEndFormatted, 
 					'starttime' => '',
 					'endtime' => '',
-					'color' => '#eeeeee',
+					'color' => '#cccccc',
 					'url' => $eventPermalink
 				);
 			endwhile;
 			$jsonEvents = json_encode($arrayEvents);
-			echo '<script>var jsonEvents = ' . $jsonEvents . '; console.log(jsonEvents);</script>';
+			echo '<script>var asagendaJsonEvents = ' . $jsonEvents . ';</script>';
+			echo '<div id="asagenda-widget-calendar-container" class="monthly"></div>';
 		endif;
+		echo '</section>';
 	}
 	function form( $instance ) {
 		// Output admin widget options form
