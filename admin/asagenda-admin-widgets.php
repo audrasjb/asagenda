@@ -28,14 +28,14 @@ class AsAgenda_list extends WP_Widget {
 		parent::__construct( 'asagenda_widget_list', 'Agenda list view', $widget_ops );
 	}
 	function widget( $args, $instance ) {
-		$nbEvents = isset($instance['nbevents']) ? $instance['nbevents'] : '';
-		if ( empty($nbEvents) ) : $nbEvents = 1; endif;
+		$asagendaTitle = isset($instance['asagenda_title']) ? $instance['asagenda_title'] : 'Agenda';
+		$asagendaNumber = isset($instance['asagenda_nbevents']) ? $instance['asagenda_nbevents'] : -1;
 		echo '<section id="asagenda-list" class="widget widget_asagenda_list">';
-		echo '<h2 class="widget-title asagenda-widget-title">' . __('Agenda', 'asagenda') . '</h2>';
+		echo '<h2 class="widget-title asagenda-widget-title">' . $asagendaTitle . '</h2>';
 		$currentDate = date('Ymd');
 		$argsAsAgenda = array(
 			'post_type'	=>	'asagenda',
-			'posts_per_page' => $nbEvents,
+			'posts_per_page' => $asagendaNumber,
 			'post_status' => 'publish',
 			'order'	=> 'ASC',
 			'meta_query' => array(
@@ -69,11 +69,17 @@ class AsAgenda_list extends WP_Widget {
 	}
 	function form( $instance ) {
 		// Output admin widget options form
-		$nbEvents = isset($instance['nbevents']) ? $instance['nbevents'] : '';
+		$asagendaTitle = isset($instance['asagenda_title']) ? $instance['asagenda_title'] : 'Agenda';
+		$asagendaNumber = isset($instance['asagenda_nbevents']) ? $instance['asagenda_nbevents'] : '-1';
     	?>
 		<p>
-    	    <label for="<?php echo $this->get_field_name( 'nbevents' ); ?>"><?php _e( 'Maximal number of events to display' ); ?></label>
-			<input class="widefat" id="<?php echo $this->get_field_id( 'nbevents' ); ?>" name="<?php echo $this->get_field_name( 'nbevents' ); ?>" type="number" value="<?php echo $nbEvents; ?>" />
+    	    <label for="<?php echo $this->get_field_name( 'asagenda_title' ); ?>"><?php _e( 'Title:' ); ?></label>
+			<input class="widefat" id="<?php echo $this->get_field_id( 'asagenda_title' ); ?>" name="<?php echo $this->get_field_name( 'asagenda_title' ); ?>" type="text" value="<?php echo $asagendaTitle; ?>" />
+    	</p>
+		<p>
+    	    <label for="<?php echo $this->get_field_name( 'asagenda_nbevents' ); ?>"><?php _e( 'Number of events to show:' ); ?></label>
+			<input class="tiny-text" id="<?php echo $this->get_field_id( 'asagenda_nbevents' ); ?>" name="<?php echo $this->get_field_name( 'asagenda_nbevents' ); ?>" type="number" value="<?php echo $asagendaNumber; ?>" size="3" min="-1" />
+			<br /><small><?php _e( 'Use <code>-1</code> if you want to show all upcoming events.', 'asagenda' ); ?></small>
     	</p>
 		<?php
 	}
