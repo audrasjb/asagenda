@@ -56,13 +56,16 @@ class AsAgenda_calendar extends WP_Widget {
 				$dateEndFormatted = date_i18n( get_option( 'date_format' ), strtotime( $dateEnd ) );
 				$eventTitle = get_the_title();
 				$eventID = get_the_title();
-				$arrayEvents[] = array( 
-					'eventID' => $eventID, 
-					'eventTitle' => $eventTitle, 
-					'dateStart' => $dateStart, 
-					'dateStartFormatted' => $dateStartFormatted, 
-					'dateEnd' => $dateEnd, 
-					'dateEndFormatted' => $dateEndFormatted 
+				$eventPermalink = get_permalink();
+				$arrayEvents['montly'][] = array( 
+					'id' => $eventID, 
+					'name' => $eventTitle, 
+					'startdate' => $dateStart, 
+					'enddate' => $dateEnd, 
+					'starttime' => '',
+					'endtime' => '',
+					'color' => '#eeeeee',
+					'url' => $eventPermalink
 				);
 			endwhile;
 			$jsonEvents = json_encode($arrayEvents);
