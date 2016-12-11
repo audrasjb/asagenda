@@ -20,15 +20,15 @@
 	// Enqueue styles
 	add_action( 'admin_enqueue_scripts', 'enqueue_styles' );
 	function enqueue_styles() {
-		wp_enqueue_style( 'asagenda', plugin_dir_url( __FILE__ ) . 'css/asagenda-admin.css', array(), '', 'all' );
 		wp_enqueue_style( 'asagenda-jquery-ui-datepicker-style', plugin_dir_url( __FILE__ ) . 'css/asagenda-jquery-ui.css', array(), '', 'all' );
+		wp_enqueue_style( 'asagenda', plugin_dir_url( __FILE__ ) . 'css/asagenda-admin.css', array(), '', 'all' );
 	}
 	
 	// Enqueue scripts
 	add_action( 'admin_enqueue_scripts', 'enqueue_scripts' );
 	function enqueue_scripts() {
-		wp_enqueue_script( 'asagenda', plugin_dir_url( __FILE__ ) . 'js/asagenda-admin.js', array( 'jquery' ), '', false );
 		wp_enqueue_script( 'jquery-ui-datepicker' );
+		wp_enqueue_script( 'asagenda', plugin_dir_url( __FILE__ ) . 'js/asagenda-admin.js', array( 'jquery' ), '', false );
 	}
 	
 	// CPT
