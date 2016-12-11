@@ -29,13 +29,12 @@ class AsAgenda_calendar extends WP_Widget {
 	}
 	function widget( $args, $instance ) {
 		$asagendaTitle = isset($instance['asagenda_title']) ? $instance['asagenda_title'] : __('Calendar', 'asagenda');
-		$asagendaNumber = isset($instance['asagenda_nbevents']) ? $instance['asagenda_nbevents'] : -1;
 		echo '<section id="asagenda-calendar" class="widget widget_asagenda_calendar">';
 		echo '<h2 class="widget-title asagenda-widget-title">' . $asagendaTitle . '</h2>';
 		$currentDate = date('Ymd');
 		$argsAsAgenda = array(
 			'post_type'	=>	'asagenda',
-			'posts_per_page' => $asagendaNumber,
+			'posts_per_page' => -1,
 			'post_status' => 'publish',
 			'order'	=> 'ASC',
 			'meta_query' => array(
@@ -48,30 +47,27 @@ class AsAgenda_calendar extends WP_Widget {
 		);
 		$queryAsAgenda = new WP_Query($argsAsAgenda);
 		if ( $queryAsAgenda->have_posts() ) :
-			echo '<ul class="asgenda-widget-calendar">';
+			$arrayEvents = array();
 			while ( $queryAsAgenda->have_posts() ) :
 				$queryAsAgenda->the_post();
 				$dateStart = get_post_meta( get_the_ID(), 'asagenda_date_start', true );
 				$dateStartFormatted = date_i18n( get_option( 'date_format' ), strtotime( $dateStart ) );
 				$dateEnd = get_post_meta( get_the_ID(), 'asagenda_date_end', true );
 				$dateEndFormatted = date_i18n( get_option( 'date_format' ), strtotime( $dateEnd ) );
-				echo '<li>';
-				echo '<a href=" ' . get_permalink() . ' ">';
-				echo '<h3>' . get_the_title() . '</h3>';
-				if ( $dateStart == $dateEnd ) : 
-					echo '<p class="asagenda-widget-date">' . $dateStartFormatted . '</p>';
-				else : 
-					echo '<p class="asagenda-widget-date"> ' . __('From', 'asgenda') . ' ' . $dateStartFormatted . ' ' . __('to', 'asagenda') . ' ' . $dateEndFormatted . '</p>';
-				endif;
-				echo '</a>';
-				echo '</li>';
+				$eventTitle = get_the_title();
+				$eventID = get_the_title();
+				$arrayEvents[] = array( 
+					'eventID' => $eventID, 
+					'eventTitle' => $eventTitle, 
+					'dateStart' => $dateStart, 
+					'dateStartFormatted' => $dateStartFormatted, 
+					'dateEnd' => $dateEnd, 
+					'dateEndFormatted' => $dateEndFormatted 
+				);
 			endwhile;
-			echo '</ul>';
-		else : 
-			echo '<p class="asagenda-widget-noeventfound"> ' . __('No upcoming event', 'asagenda') . ' </p>';
+			$jsonEvents = json_encode($arrayEvents);
+			echo '<script>var jsonEvents = ' . $jsonEvents . '; console.log(jsonEvents);</script>';
 		endif;
-		echo '</ul>';
-		echo '</section>';
 	}
 	function form( $instance ) {
 		// Output admin widget options form
