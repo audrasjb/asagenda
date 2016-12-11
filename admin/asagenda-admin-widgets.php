@@ -52,11 +52,17 @@ class AsAgenda_list extends WP_Widget {
 			while ( $queryAsAgenda->have_posts() ) :
 				$queryAsAgenda->the_post();
 				$dateStart = get_post_meta( get_the_ID(), 'asagenda_date_start', true );
+				$dateStartFormatted = date_i18n( get_option( 'date_format' ), strtotime( $dateStart ) );
 				$dateEnd = get_post_meta( get_the_ID(), 'asagenda_date_end', true );
+				$dateEndFormatted = date_i18n( get_option( 'date_format' ), strtotime( $dateEnd ) );
 				echo '<li>';
 				echo '<a href=" ' . get_permalink() . ' ">';
 				echo '<h3>' . get_the_title() . '</h3>';
-				echo '<p>Start: ' . $dateStart . ' – End: ' . $dateEnd . '</p>';
+				if ( $dateStart == $dateEnd ) : 
+					echo '<p>' . $dateStartFormatted . '</p>';
+				else : 
+					echo '<p>From ' . $dateStartFormatted . ' to ' . $dateEndFormatted . '</p>';
+				endif;
 				echo '</a>';
 				echo '</li>';
 			endwhile;
