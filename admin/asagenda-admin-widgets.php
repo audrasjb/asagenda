@@ -32,9 +32,19 @@ class AsAgenda_list extends WP_Widget {
 		if ( empty($nbEvents) ) : $nbEvents = 1; endif;
 		echo '<section id="asagenda-list" class="widget widget_asagenda_list">';
 		echo '<h2 class="widget-title asagenda-widget-title">' . __('Agenda', 'asagenda') . '</h2>';
+		$currentDate = date('Ymd');
 		$argsAsAgenda = array(
 			'post_type'	=>	'asagenda',
 			'posts_per_page' => $nbEvents,
+			'post_status' => 'publish',
+			'order'	=> 'ASC',
+			'meta_query' => array(
+				array(
+					'key'     => 'asagenda_date_end',
+					'value'   => $currentDate,
+					'compare' => '>='
+				)
+			)
 		);
 		$queryAsAgenda = new WP_Query($argsAsAgenda);
 		if ( $queryAsAgenda->have_posts() ) :
