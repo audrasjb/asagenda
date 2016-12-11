@@ -95,9 +95,9 @@
 		global $post;
 		switch( $column ) {
 			case 'asagenda_date_start' :
-				$dateDebut = get_post_meta($post_id, 'asagenda_date_start', true);
-				if ($dateDebut) {
-					echo substr($dateDebut,6,2).'/'.substr($dateDebut,4,2).'/'.substr($dateDebut,0,4);
+				$dateStart = get_post_meta($post_id, 'asagenda_date_start', true);
+				if ($dateStart) {
+					echo substr($dateStart,6,2).'/'.substr($dateStart,4,2).'/'.substr($dateStart,0,4);
 				} else {
 					echo __('The date is empty. This content can not be displayed in the calendar.');
 				}
