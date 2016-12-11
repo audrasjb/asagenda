@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Widgets.
+ * List view widget.
  *
  * @link       http://jeanbaptisteaudras.com
  * @since      1.0.0
@@ -22,13 +22,13 @@ class AsAgenda_list extends WP_Widget {
 	function __construct() {
 		$widget_ops = array( 
 			'classname' => 'asagenda_widget_list',
-			'description' => 'Display the list of your upcoming AsAgenda events.',
+			'description' => __('Display the list of your upcoming AsAgenda events.', 'asagenda'),
 		);
 		// Instantiate the parent object
-		parent::__construct( 'asagenda_widget_list', 'Agenda list view', $widget_ops );
+		parent::__construct( 'asagenda_widget_list', __('Agenda list view', 'asagenda'), $widget_ops );
 	}
 	function widget( $args, $instance ) {
-		$asagendaTitle = isset($instance['asagenda_title']) ? $instance['asagenda_title'] : 'Agenda';
+		$asagendaTitle = isset($instance['asagenda_title']) ? $instance['asagenda_title'] : __('Agenda', 'asagenda');
 		$asagendaNumber = isset($instance['asagenda_nbevents']) ? $instance['asagenda_nbevents'] : -1;
 		echo '<section id="asagenda-list" class="widget widget_asagenda_list">';
 		echo '<h2 class="widget-title asagenda-widget-title">' . $asagendaTitle . '</h2>';
@@ -59,9 +59,9 @@ class AsAgenda_list extends WP_Widget {
 				echo '<a href=" ' . get_permalink() . ' ">';
 				echo '<h3>' . get_the_title() . '</h3>';
 				if ( $dateStart == $dateEnd ) : 
-					echo '<p>' . $dateStartFormatted . '</p>';
+					echo '<p class="asagenda-widget-date">' . $dateStartFormatted . '</p>';
 				else : 
-					echo '<p>From ' . $dateStartFormatted . ' to ' . $dateEndFormatted . '</p>';
+					echo '<p class="asagenda-widget-date"> ' . __('From', 'asgenda') . ' ' . $dateStartFormatted . ' ' . __('to', 'asagenda') . ' ' . $dateEndFormatted . '</p>';
 				endif;
 				echo '</a>';
 				echo '</li>';
@@ -75,7 +75,7 @@ class AsAgenda_list extends WP_Widget {
 	}
 	function form( $instance ) {
 		// Output admin widget options form
-		$asagendaTitle = isset($instance['asagenda_title']) ? $instance['asagenda_title'] : 'Agenda';
+		$asagendaTitle = isset($instance['asagenda_title']) ? $instance['asagenda_title'] : __('Agenda', 'asagenda');
 		$asagendaNumber = isset($instance['asagenda_nbevents']) ? $instance['asagenda_nbevents'] : '-1';
     	?>
 		<p>
