@@ -33,6 +33,7 @@
 			'high'
 		);
 
+		/*
 		add_meta_box( 
         	'asagenda_place_metabox',
 			__( 'Place', 'asagenda' ),
@@ -41,7 +42,7 @@
 			'normal',
 			'low' 
 		);
-    
+		*/
 	}
 
 	function asagenda_Create_Dates_Metabox( $post ) {
@@ -60,7 +61,7 @@
 				$messageBoxEnd = '<p style="color: #c00;">' . __('This event no longer appears in the calendar because it is finished. You can change the dates if necessary.') . '</p>';
 	    	} else {
 	    		// Upcoming event
-				$messageBoxUpcoming = '<p style="color: #0c0;">' . __('This event is displayed in the calendar. You can change the dates if necessary.') . '</p>';
+				$messageBoxUpcoming = '<p style="color: #0c0;">' . __('This event is upcoming and displayed in the calendar. You can change the dates if necessary.') . '</p>';
 	    	}
 		}
 		?>
@@ -105,7 +106,7 @@
  		}
 	}
 
-
+	/*
 	function asagenda_Create_Place_Metabox( $post ) {
     	// Use nonce for verification
 		// wp_nonce_field( plugin_basename( __FILE__ ), 'post_map_noncename' );
@@ -167,4 +168,5 @@
         <?php
     }
     add_action('admin_head', 'print_google_map_script');
+    */
    
