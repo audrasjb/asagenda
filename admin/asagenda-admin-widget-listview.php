@@ -70,7 +70,6 @@ class AsAgenda_list extends WP_Widget {
 		else : 
 			echo '<p class="asagenda-widget-noeventfound"> ' . __('No upcoming event', 'asagenda') . ' </p>';
 		endif;
-		echo '</ul>';
 		echo '</section>';
 	}
 	function form( $instance ) {
