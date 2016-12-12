@@ -53,11 +53,15 @@ class AsAgenda_list extends WP_Widget {
 				$queryAsAgenda->the_post();
 				$dateStart = get_post_meta( get_the_ID(), 'asagenda_date_start', true );
 				$dateStartFormatted = date_i18n( get_option( 'date_format' ), strtotime( $dateStart ) );
+				$dateStartFormattedUTC = date_i18n( 'c', strtotime( $dateStart ) );
 				$dateEnd = get_post_meta( get_the_ID(), 'asagenda_date_end', true );
 				$dateEndFormatted = date_i18n( get_option( 'date_format' ), strtotime( $dateEnd ) );
-				echo '<li>';
-				echo '<a href=" ' . get_permalink() . ' ">';
-				echo '<h3>' . get_the_title() . '</h3>';
+				$dateEndFormattedUTC = date_i18n( 'c', strtotime( $dateEnd ) );
+				echo '<li itemscope itemtype="http://schema.org/Event">';
+				echo '<meta itemprop="startDate" content="' . $dateStartFormattedUTC . '">';
+				echo '<meta itemprop="endDate" content="' . $dateEndFormattedUTC . '">';
+				echo '<a itemprop="url" href=" ' . get_permalink() . ' ">';
+				echo '<h3 itemprop="name">' . get_the_title() . '</h3>';
 				if ( $dateStart == $dateEnd ) : 
 					echo '<p class="asagenda-widget-date">' . $dateStartFormatted . '</p>';
 				else : 

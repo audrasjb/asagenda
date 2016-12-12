@@ -54,11 +54,15 @@
 					$queryAsAgenda->the_post();
 					$dateStart = get_post_meta( get_the_ID(), 'asagenda_date_start', true );
 					$dateStartFormatted = date_i18n( get_option( 'date_format' ), strtotime( $dateStart ) );
+					$dateStartFormattedUTC = date_i18n( 'c', strtotime( $dateStart ) );
 					$dateEnd = get_post_meta( get_the_ID(), 'asagenda_date_end', true );
 					$dateEndFormatted = date_i18n( get_option( 'date_format' ), strtotime( $dateEnd ) );
-					$asAgendaListView .= '<li>';
-					$asAgendaListView .= '<a href=" ' . get_permalink() . ' ">';
-					$asAgendaListView .= '<h3>' . get_the_title() . '</h3>';
+					$dateEndFormattedUTC = date_i18n( 'c', strtotime( $dateEnd ) );
+					$asAgendaListView .= '<li itemscope itemtype="http://schema.org/Event">';
+					$asAgendaListView .= '<meta itemprop="startDate" content="' . $dateStartFormattedUTC . '">';
+					$asAgendaListView .= '<meta itemprop="endDate" content="' . $dateEndFormattedUTC . '">';
+					$asAgendaListView .= '<a itemprop="url" href=" ' . get_permalink() . ' ">';
+					$asAgendaListView .= '<h3 itemprop="name">' . get_the_title() . '</h3>';
 					if ( $dateStart == $dateEnd ) : 
 						$asAgendaListView .= '<p class="asagenda-widget-date">' . $dateStartFormatted . '</p>';
 					else : 
