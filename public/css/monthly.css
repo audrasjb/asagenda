@@ -273,6 +273,7 @@
 
 .monthly-day .monthly-event-indicator span {
 	color: transparent;
+	font-size: 0.75em;
 }
 
 .monthly-day .monthly-event-indicator:hover {

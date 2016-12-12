@@ -56,6 +56,8 @@
 					$dateStartFormatted = date_i18n( 'Y-m-d', strtotime( $dateStart ) );
 					$dateEnd = get_post_meta( get_the_ID(), 'asagenda_date_end', true );
 					$dateEndFormatted = date_i18n( 'Y-m-d', strtotime( $dateEnd ) );
+					$colorPicker = get_post_meta( get_the_ID(), 'asagenda_colorpicker', true );
+					if (empty($colorPicker)) : $colorPicker = '#dddddd'; endif;
 					if ( $dateStartFormatted == $dateEndFormatted ) : $dateEndFormatted = ''; endif;
 					$eventTitle = get_the_title();
 					$eventID = get_the_title();
@@ -67,7 +69,7 @@
 						'enddate' => $dateEndFormatted, 
 						'starttime' => '',
 						'endtime' => '',
-						'color' => '#cccccc',
+						'color' => $colorPicker,
 						'url' => $eventPermalink
 					);
 				endwhile;

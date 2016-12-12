@@ -49,6 +49,7 @@
 		// Get existing dates
 		$dateStart = get_post_meta( $post->ID, 'asagenda_date_start', true );
 		$dateEnd = get_post_meta( $post->ID, 'asagenda_date_end', true );
+		$colorPicker = get_post_meta( $post->ID, 'asagenda_colorpicker', true );
  
 		// Nonce field for security
 		wp_nonce_field( plugin_basename(__FILE__), 'asagenda_metabox_nonce');
@@ -68,6 +69,7 @@
 		<p><em><?php echo __('If it’s a single day event, use the same value for both start and end dates.') ?></em></p>
 		<p><label for="date-start"><?php echo __('Start date') ?></label><br /><input id="date-start" name="date-start" type="text" value="<?php if ($dateStart) { echo substr($dateStart,6,2).'/'.substr($dateStart,4,2).'/'.substr($dateStart,0,4); } ?>" /></p>
 		<p><label for="date-end"><?php echo __('End date') ?></label><br /><input id="date-end" name="date-end" type="text" value="<?php if ($dateEnd) { echo substr($dateEnd,6,2).'/'.substr($dateEnd,4,2).'/'.substr($dateEnd,0,4); } ?>" /></p>
+		<p>Color displayed in the calendar:<input id="asagenda-colorpicker" name="asagenda-colorpicker" type="text" value="<?php if ($colorPicker) { echo $colorPicker; } ?>" /></p>
 		<?php if (isset($messageBoxEnd)) { echo $messageBoxEnd; } ?>
 		<?php if (isset($messageBoxUpcoming)) { echo $messageBoxUpcoming; } ?>
 		<?php
@@ -103,6 +105,14 @@
  		} else {
  			add_post_meta($post_id, 'asagenda_date_end', '', true);
  			update_post_meta($post_id, 'asagenda_date_end', '');
+ 		}
+ 		if ( isset($_POST['asagenda-colorpicker']) && !empty($_POST['asagenda-colorpicker']) ) {
+ 			$colorPicker = $_POST['asagenda-colorpicker'];
+ 			add_post_meta($post_id, 'asagenda_colorpicker', $colorPicker, true);
+ 			update_post_meta($post_id, 'asagenda_colorpicker', $colorPicker);
+ 		} else {
+ 			add_post_meta($post_id, 'asagenda_colorpicker', '', true);
+ 			update_post_meta($post_id, 'asagenda_colorpicker', '');
  		}
 	}
 

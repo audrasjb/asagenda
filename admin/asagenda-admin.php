@@ -21,6 +21,7 @@
 	add_action( 'admin_enqueue_scripts', 'enqueue_styles_asagenda_admin' );
 	function enqueue_styles_asagenda_admin() {
 		wp_enqueue_style( 'asagenda-jquery-ui-datepicker-style', plugin_dir_url( __FILE__ ) . 'css/asagenda-jquery-ui.css', array(), '', 'all' );
+		wp_enqueue_style( 'wp-color-picker' );
 		wp_enqueue_style( 'asagenda', plugin_dir_url( __FILE__ ) . 'css/asagenda-admin.css', array(), '', 'all' );
 	}
 	
@@ -28,7 +29,7 @@
 	add_action( 'admin_enqueue_scripts', 'enqueue_scripts_asagenda_admin' );
 	function enqueue_scripts_asagenda_admin() {
 		wp_enqueue_script( 'jquery-ui-datepicker' );
-		wp_enqueue_script( 'asagenda', plugin_dir_url( __FILE__ ) . 'js/asagenda-admin.js', array( 'jquery' ), '', false );
+		wp_enqueue_script( 'asagenda', plugin_dir_url( __FILE__ ) . 'js/asagenda-admin.js', array( 'jquery', 'wp-color-picker' ), '', false );
 	}
 	
 	// CPT

@@ -55,6 +55,8 @@ class AsAgenda_calendar extends WP_Widget {
 				$dateEnd = get_post_meta( get_the_ID(), 'asagenda_date_end', true );
 				$dateEndFormatted = date_i18n( 'Y-m-d', strtotime( $dateEnd ) );
 				if ( $dateStartFormatted == $dateEndFormatted ) : $dateEndFormatted = ''; endif;
+				$colorPicker = get_post_meta( get_the_ID(), 'asagenda_colorpicker', true );
+				if (empty($colorPicker)) : $colorPicker = '#dddddd'; endif;
 				$eventTitle = get_the_title();
 				$eventID = get_the_title();
 				$eventPermalink = get_permalink();
@@ -65,7 +67,7 @@ class AsAgenda_calendar extends WP_Widget {
 					'enddate' => $dateEndFormatted, 
 					'starttime' => '',
 					'endtime' => '',
-					'color' => '#cccccc',
+					'color' => $colorPicker,
 					'url' => $eventPermalink
 				);
 			endwhile;
