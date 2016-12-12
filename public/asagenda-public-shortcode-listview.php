@@ -39,6 +39,8 @@
 				'posts_per_page' => $asagendaNumber,
 				'post_status' => 'publish',
 				'order'	=> 'ASC',
+				'orderby' => 'meta_value',
+				'meta_key' => 'asagenda_date_start',
 				'meta_query' => array(
 					array(
 						'key'     => 'asagenda_date_end',
