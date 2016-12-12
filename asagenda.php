@@ -66,3 +66,4 @@ require_once plugin_dir_path( dirname( __FILE__ ) ) . '/' .$plugin_name . '/admi
  */
 require_once plugin_dir_path( dirname( __FILE__ ) ) . '/' .$plugin_name . '/public/asagenda-public.php';
 require_once plugin_dir_path( dirname( __FILE__ ) ) . '/' .$plugin_name . '/public/asagenda-public-shortcode-listview.php';
+require_once plugin_dir_path( dirname( __FILE__ ) ) . '/' .$plugin_name . '/public/asagenda-public-shortcode-calendarview.php';
