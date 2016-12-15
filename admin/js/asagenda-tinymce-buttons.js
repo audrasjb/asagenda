@@ -1,14 +1,15 @@
 (function( $ ) {
 	'use strict';
 
-	tinymce.PluginManager.add('asagenda_listview', function( editor, url ) {
+	tinymce.PluginManager.add('asagenda_shortcodes', function( editor, url ) {
 		editor.addButton('asagenda', {
 			title: 'Agenda shortcodes',
-			id: 'asagenda_calendar',
-			cmd: 'asagenda_calendar',
-			onclick: function () {
-		    	editor.insertContent('[asagenda-list]');
-		    }
+			id: 'asagenda_shortcode_button',
+			cmd: 'asagenda_shortcodes_modal'
+		});
+
+		editor.addCommand( 'asagenda_shortcodes_modal', function() {
+			console.log('buttonpressed!');
 		});
 	});
 		

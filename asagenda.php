@@ -52,6 +52,7 @@ require_once plugin_dir_path( dirname( __FILE__ ) ) . '/' .$plugin_name . '/admi
 require_once plugin_dir_path( dirname( __FILE__ ) ) . '/' .$plugin_name . '/admin/asagenda-admin-metaboxes.php';
 require_once plugin_dir_path( dirname( __FILE__ ) ) . '/' .$plugin_name . '/admin/asagenda-admin-widget-listview.php';
 require_once plugin_dir_path( dirname( __FILE__ ) ) . '/' .$plugin_name . '/admin/asagenda-admin-widget-calendarview.php';
+require_once plugin_dir_path( dirname( __FILE__ ) ) . '/' .$plugin_name . '/admin/asagenda-admin-shortcodes-tinymce.php';
 
 /**
  * The class responsible for defining all actions that occur in the public-facing
