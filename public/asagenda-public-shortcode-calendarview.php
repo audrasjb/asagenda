@@ -39,13 +39,6 @@
 				'posts_per_page' => -1,
 				'post_status' => 'publish',
 				'order'	=> 'ASC',
-				'meta_query' => array(
-					array(
-						'key'     => 'asagenda_date_end',
-						'value'   => $currentDate,
-						'compare' => '>='
-					)
-				)
 			);
 			$queryAsAgenda = new WP_Query($argsAsAgenda);
 			if ( $queryAsAgenda->have_posts() ) :
