@@ -21,7 +21,6 @@
  * @author     audrasjb <audrasjb@gmail.com>
  */
    
- 
  	add_action( 'admin_init', 'asgenda_tinymce_buttons' );
  	function asgenda_tinymce_buttons() {
 		if ( ! current_user_can('edit_posts') && ! current_user_can('edit_pages') ) {
@@ -38,7 +37,7 @@
 		}
 
 		function asagenda_register_buttons( $buttons ) {
-			array_push( $buttons, 'asagenda_listview' );
+			array_push( $buttons, 'asagenda_shortcodes' );
 			// array_push( $buttons, 'asagenda_calendarview' );
 			return $buttons;
 		}

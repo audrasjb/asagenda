@@ -1,6 +1,7 @@
 (function( $ ) {
 	'use strict';
-
+	
+	
 	tinymce.PluginManager.add('asagenda_shortcodes', function( editor, url ) {
 		editor.addButton('asagenda', {
 			title: 'Agenda shortcodes',
